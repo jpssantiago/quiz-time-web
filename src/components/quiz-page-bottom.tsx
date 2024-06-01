@@ -1,13 +1,25 @@
 import { useState } from "react"
 import { ChevronRight } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 import { useQuiz } from "../hooks/quiz-context"
+import { useCreator } from "../hooks/creator-context"
 import { EnterCreatorModeModal } from "./enter-creator-mode-modal"
 
 export function QuizPageBottom() {
     const [show, setShow] = useState<boolean>(false)
     
-    const { selectedAnswer, nextQuestion } = useQuiz()
+    const { quiz, selectedAnswer, nextQuestion } = useQuiz()
+    const { hasToken } = useCreator()
+    const navigate = useNavigate()
+
+    function handleClick() {
+        if (hasToken) {
+            return navigate(`/creator/${quiz?.pin}`)
+        }
+
+        setShow(true)
+    }
 
     return (
         <div className="flex items-center justify-between h-12">
@@ -20,13 +32,13 @@ export function QuizPageBottom() {
                 Are you the creator of this quiz?
                 <span 
                     className="transition-all cursor-pointer text-light-purple hover:text-dark-purple"
-                    onClick={() => setShow(true)}
+                    onClick={handleClick}
                 > You can edit it</span>.
             </span>
 
             <span 
                 className="hidden text-sm text-center text-light-purple phone:flex"
-                onClick={() => setShow(true)}
+                onClick={handleClick}
             >Edit this quiz.</span>
 
             <button 
