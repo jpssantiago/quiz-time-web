@@ -7,11 +7,11 @@ import { Button } from "./button"
 export function CreatorActionsTail() {
     const { signOut } = useCreator()
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { pin } = useParams()
 
     function handleLeaveCreatorMode() {
         signOut()
-        navigate(`/quiz/${id}`)
+        navigate(`/quiz/${pin}`)
     }
 
     function handleDelete() {

@@ -23,13 +23,13 @@ export function CreatorProvider({ children }: any) {
     async function authenticate(pin: string, password: string): Promise<boolean> {
         const response = await authenticateWithPassword(pin, password)
 
-        setCookie("quiztime-auth-token", response)
+        setCookie("quiztime-auth-token", response, { path: "/" })
 
         return !!response
     }
 
     function signOut() {
-        removeCookie("quiztime-auth-token")
+        removeCookie("quiztime-auth-token", { path: "/" })
     }
 
     return (
