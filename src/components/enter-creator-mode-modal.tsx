@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { X } from "lucide-react"
+import { ToastContainer, toast } from "react-toastify"
+import { useParams, useNavigate } from "react-router-dom"
 
 import { Input } from "./input"
 import { Button } from "./button"
+import { useCreator } from "../hooks/creator-context"
 
 interface Props {
     show: boolean
@@ -11,11 +14,30 @@ interface Props {
 
 export function EnterCreatorModeModal({ show, onClose }: Props) {
     const [password, setPassword] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(false)
 
-    function handleOnSubmit(event: any) {
+    const { authenticate } = useCreator()
+    const { id } = useParams()
+    const navigate = useNavigate()
+
+    async function handleOnSubmit(event: any) {
         event.preventDefault()
 
-        alert(password)
+        if (loading) return
+
+        if (password.trim().length == 0) {
+            return toast("You need to enter the password to edit.")
+        }
+
+        setLoading(true)
+        const isTheCreator = await authenticate(id ?? "", password)
+        setLoading(false)
+
+        if (!isTheCreator) {
+            return toast("The password is incorrect.")
+        }
+
+        navigate("/creator/:id")
     }
 
     if (!show) return (<div className="absolute" />)
@@ -44,6 +66,13 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
 
                 <Button>Enter the creator mode</Button>
             </form>
+
+            <ToastContainer
+                pauseOnHover={false}
+                theme="dark"
+                toastStyle={{ color: "#D9D9D9" }}
+                progressStyle={{ background: "#633BBC" }}
+            />
         </>
     )
 }

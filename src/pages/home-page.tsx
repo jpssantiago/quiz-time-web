@@ -20,6 +20,8 @@ export function HomePage() {
     async function handleOnSubmit(event: any) {
         event.preventDefault()
 
+        if (loading) return
+
         if (pin.trim().length == 0) {
             return toast("Enter a valid pin to continue.")
         }

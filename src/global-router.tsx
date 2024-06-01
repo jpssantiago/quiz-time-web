@@ -11,6 +11,7 @@ export function GlobalRouter() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/quiz/:id" element={<QuizPage />} />
+        <Route path="/creator/:id" element={<h1>You are on the creator mode</h1>} />
       </Routes>
     </BrowserRouter>
   )
