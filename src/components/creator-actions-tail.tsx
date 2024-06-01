@@ -20,10 +20,10 @@ export function CreatorActionsTail() {
 
     return (
         <div className="flex h-12 gap-5">
-            <div className="w-[205px] h-12">
+            <div className="w-[205px] h-full">
                 <Button 
                     variant="outlined" 
-                    height={48}
+                    height="h-12"
                     onClick={handleLeaveCreatorMode}
                 >Leave creator mode</Button>
             </div>

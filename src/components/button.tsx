@@ -2,7 +2,7 @@ interface Props {
     onClick?: () => void
     variant?: "contained" | "outlined"
 
-    height?: number
+    height?: string
     children?: any
 }
 
@@ -12,7 +12,7 @@ export function Button({ onClick, variant = "contained", height, children }: Pro
             className={`
                 border-2
                 rounded-lg
-                ${height ? "h-[" + height + "px]" : "h-16"}
+                ${height ?? "h-16"}
                 w-full
                 transition-all
                 ${variant == "contained" ? 
