@@ -34,6 +34,8 @@ export function QuizProvider({ children }: any) {
         const response = await getQuizById(id)
         setQuiz(response)
         setCurrentQuestion(response?.questions[0] ?? null)
+        setSelectedAnswer(null)
+        setScore(0)
 
         return response?._id
     }

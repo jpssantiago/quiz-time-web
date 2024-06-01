@@ -37,7 +37,7 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
             return toast("The password is incorrect.")
         }
 
-        navigate("/creator/:id")
+        navigate("/creator/" + id)
     }
 
     if (!show) return (<div className="absolute" />)
@@ -62,7 +62,12 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
                     </span>
                 </div>
 
-                <Input placeholder="Password" value={password} onChange={setPassword} />
+                <Input
+                    placeholder="Password"
+                    value={password}
+                    onChange={setPassword}
+                    type="password"
+                />
 
                 <Button>Enter the creator mode</Button>
             </form>
