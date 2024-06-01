@@ -13,14 +13,14 @@ import { FinishedQuizContainer } from "../components/finished-quiz-container"
 export function QuizPage() {
     const { quiz, loadQuiz, currentQuestion } = useQuiz()
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { pin } = useParams()
 
     useEffect(() => {
         async function tryToLoadQuiz() {
-            if (!id) return navigate("/")
+            if (!pin) return navigate("/")
 
             if (!quiz) {
-                const loaded = await loadQuiz(id)
+                const loaded = await loadQuiz(pin)
                 if (!loaded) return navigate("/")
             }
         }

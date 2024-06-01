@@ -7,14 +7,14 @@ import { PageHeader } from "../components/page-header"
 import { CreatorActionsTail } from "../components/creator-actions-tail"
 
 export function CreatorPage() {
-    const { id } = useParams()
+    const { pin } = useParams()
     const navigate = useNavigate()
 
     const { isAuthenticated } = useCreator()
 
     useEffect(() => {
         if (!isAuthenticated) {
-            return navigate(`/quiz/${id}`)
+            return navigate(`/quiz/${pin}`)
         }
     }, [])
 

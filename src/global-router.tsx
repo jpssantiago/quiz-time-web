@@ -11,8 +11,8 @@ export function GlobalRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/quiz/:id" element={<QuizPage />} />
-        <Route path="/creator/:id" element={<CreatorPage />} />
+        <Route path="/quiz/:pin" element={<QuizPage />} />
+        <Route path="/creator/:pin" element={<CreatorPage />} />
       </Routes>
     </BrowserRouter>
   )

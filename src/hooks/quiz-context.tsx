@@ -1,13 +1,13 @@
 import { createContext, useContext, useState } from "react"
 
 import { Quiz } from "../models/quiz"
-import { getQuizById } from "../services/quiz-service"
+import { getQuizByPin } from "../services/quiz-service"
 import { Question } from "../models/question"
 import { Answer } from "../models/answer"
 
 interface QuizContextType {
     quiz: Quiz | null
-    loadQuiz: (id: string) => Promise<string | undefined>
+    loadQuiz: (pin: string) => Promise<string | undefined>
 
     currentQuestion: Question | null
     nextQuestion: () => boolean
@@ -30,14 +30,14 @@ export function QuizProvider({ children }: any) {
     const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null)
     const [score, setScore] = useState<number>(0)
 
-    async function loadQuiz(id: string): Promise<string | undefined> {
-        const response = await getQuizById(id)
+    async function loadQuiz(pin: string): Promise<string | undefined> {
+        const response = await getQuizByPin(pin)
         setQuiz(response)
         setCurrentQuestion(response?.questions[0] ?? null)
         setSelectedAnswer(null)
         setScore(0)
 
-        return response?._id
+        return response?.pin
     }
 
     function nextQuestion(): boolean {

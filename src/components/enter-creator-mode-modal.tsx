@@ -17,7 +17,7 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
     const [loading, setLoading] = useState<boolean>(false)
 
     const { authenticate } = useCreator()
-    const { id } = useParams()
+    const { pin } = useParams()
     const navigate = useNavigate()
 
     async function handleOnSubmit(event: any) {
@@ -30,14 +30,14 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
         }
 
         setLoading(true)
-        const isTheCreator = await authenticate(id ?? "", password)
+        const isTheCreator = await authenticate(pin ?? "", password)
         setLoading(false)
 
         if (!isTheCreator) {
             return toast("The password is incorrect.")
         }
 
-        navigate("/creator/" + id)
+        navigate("/creator/" + pin)
     }
 
     if (!show) return (<div className="absolute" />)
@@ -69,7 +69,7 @@ export function EnterCreatorModeModal({ show, onClose }: Props) {
                     type="password"
                 />
 
-                <Button>Enter the creator mode</Button>
+                <Button>{loading ? "Loading..." : "Enter the creator mode"}</Button>
             </form>
 
             <ToastContainer
