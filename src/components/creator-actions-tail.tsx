@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react"
+import { Trash2, LogOut } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { useCreator } from "../hooks/creator-context"
@@ -19,8 +19,8 @@ export function CreatorActionsTail() {
     }
 
     return (
-        <div className="flex h-12 gap-5">
-            <div className="w-[205px] h-full">
+        <div className="flex h-12 gap-5 phone:gap-2">
+            <div className="w-[205px] h-full phone:hidden">
                 <Button 
                     variant="outlined" 
                     height="h-12"
@@ -28,12 +28,20 @@ export function CreatorActionsTail() {
                 >Leave creator mode</Button>
             </div>
 
-            <div 
-                className="flex items-center justify-center transition-all border-2 rounded-lg cursor-pointer size-12 border-danger hover:bg-card"
+            
+            <button 
+                className="items-center justify-center hidden transition-all border-2 rounded-lg size-12 border-light-purple hover:bg-card phone:flex"
+                onClick={handleDelete}
+            >
+                <LogOut size={24} className="text-light-purple" />
+            </button>
+
+            <button 
+                className="flex items-center justify-center transition-all border-2 rounded-lg size-12 border-danger hover:bg-card"
                 onClick={handleDelete}
             >
                 <Trash2 size={24} className="text-danger" />
-            </div>
+            </button>
         </div>
     )
 }
