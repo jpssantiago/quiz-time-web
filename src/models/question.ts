@@ -4,4 +4,5 @@ export interface Question {
     id: string
     text: string
     answers: Answer[]
+    correctAnswer: string
 }

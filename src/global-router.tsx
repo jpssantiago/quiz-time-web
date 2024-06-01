@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import { HomePage } from "./pages/home-page"
+import { QuizPage } from "./pages/quiz-page"
 
 import "./global.css"
 
@@ -9,6 +10,7 @@ export function GlobalRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/quiz/:id" element={<QuizPage />} />
       </Routes>
     </BrowserRouter>
   )

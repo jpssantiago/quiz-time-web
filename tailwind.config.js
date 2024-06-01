@@ -13,7 +13,10 @@ export default {
         "stroke": "#252C3A",
         "caption": "#565E6D",
         "dark-purple": "#633BBC",
-        "light-purple": "#996DFF"
+        "light-purple": "#996DFF",
+        "success": "#ABF770",
+        "danger": "#F77070",
+        "modal": "#161A24"
       },
       fontFamily: {
         "sora": ["Sora", "sans-serif"]
