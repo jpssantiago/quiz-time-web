@@ -9,7 +9,7 @@ import { EnterCreatorModeModal } from "./enter-creator-mode-modal"
 export function QuizPageBottom() {
     const [show, setShow] = useState<boolean>(false)
     
-    const { quiz, selectedAnswer, nextQuestion } = useQuiz()
+    const { currentQuestion, quiz, selectedAnswer, nextQuestion } = useQuiz()
     const { hasToken } = useCreator()
     const navigate = useNavigate()
 
@@ -21,11 +21,13 @@ export function QuizPageBottom() {
         setShow(true)
     }
 
+    const index = quiz?.questions.findIndex(q => q.id == currentQuestion?.id)
+
     return (
         <div className="flex items-center justify-between h-12">
             <div className="flex items-center w-12 gap-1 text-text">
-                <strong className="text-xl">1</strong>
-                <span className="text-[12px]">/ 5</span>
+                <strong className="text-xl">{(index ?? 0) + 1}</strong>
+                <span className="text-[12px]">/ {quiz?.questions.length}</span>
             </div>
 
             <span className="text-base text-center text-text phone:hidden">

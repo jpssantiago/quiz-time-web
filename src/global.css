@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 html {
-    width: 100vw;
-    height: 100vh;
-
     background: #161A24;
 
     font-family: "Sora", "sans-serif";
