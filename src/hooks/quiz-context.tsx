@@ -16,6 +16,8 @@ interface QuizContextType {
     selectAnswer: (answer: Answer) => void
 
     score: number
+
+    restartQuiz: () => void
 }
 
 const QuizContext = createContext({} as QuizContextType)
@@ -62,9 +64,15 @@ export function QuizProvider({ children }: any) {
             setScore(score + 1)
         }
     }
+
+    function restartQuiz() {
+        setCurrentQuestion(quiz?.questions[0])
+        setSelectedAnswer(undefined)
+        setScore(0)
+    }
     
     return (
-        <QuizContext.Provider value={{ quiz, loadQuiz, currentQuestion, nextQuestion, selectedAnswer, selectAnswer, score }}>
+        <QuizContext.Provider value={{ quiz, loadQuiz, currentQuestion, nextQuestion, selectedAnswer, selectAnswer, score, restartQuiz }}>
             {children}
         </QuizContext.Provider>
     )

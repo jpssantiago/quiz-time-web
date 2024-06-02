@@ -4,7 +4,7 @@ import { useQuiz } from "../hooks/quiz-context"
 import { Button } from "./button"
 
 export function FinishedQuizContainer() {
-    const { score, quiz } = useQuiz()
+    const { score, quiz, restartQuiz } = useQuiz()
     const navigate = useNavigate()
 
     const length = quiz?.questions.length ?? 0
@@ -20,19 +20,20 @@ export function FinishedQuizContainer() {
         }
 
         if (percent < 50) {
-            return `Every master was once a beginner. Your score is ${score}/${length}.`
+            return `Every master was once a beginner. Your score is ${score} out of ${length}.`
         }
 
-        return `Well done, you've got ${score} out of ${length}.`
+        return `Well done, your score is ${score} out of ${length}.`
     }
 
     return (
         <div className="flex flex-col items-center justify-center gap-10 size-full">
             <span className="font-bold text-center text-9xl text-text phone:text-7xl">{percent.toFixed(0)}%</span>
-            
-            <div className="flex flex-col items-center gap-3">
+
+            <div className="max-w-[400px] w-full flex flex-col items-center gap-3">
                 <span className="text-lg text-center text-text">{getMessage()}</span>
-                <div className="w-[350px]">
+                <div className="flex w-full gap-2">
+                    <Button variant="outlined" onClick={restartQuiz}>Retake the quiz</Button>
                     <Button onClick={() => navigate("/")}>Go back to home</Button>
                 </div>
             </div>
