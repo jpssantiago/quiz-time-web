@@ -1,18 +1,18 @@
 import { createContext, useContext, useState } from "react"
 
 import { Quiz } from "../models/quiz"
-import { getQuizById } from "../services/quiz-service"
+import { getQuizByPin } from "../services/quiz-service"
 import { Question } from "../models/question"
 import { Answer } from "../models/answer"
 
 interface QuizContextType {
-    quiz: Quiz | null
-    loadQuiz: (id: string) => Promise<string | undefined>
+    quiz?: Quiz
+    loadQuiz: (pin: string) => Promise<string | undefined>
 
-    currentQuestion: Question | null
+    currentQuestion?: Question
     nextQuestion: () => boolean
 
-    selectedAnswer: Answer | null
+    selectedAnswer?: Answer
     selectAnswer: (answer: Answer) => void
 
     score: number
@@ -25,31 +25,33 @@ export function useQuiz() {
 }
 
 export function QuizProvider({ children }: any) {
-    const [quiz, setQuiz] = useState<Quiz | null>(null)
-    const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null)
-    const [selectedAnswer, setSelectedAnswer] = useState<Answer | null>(null)
+    const [quiz, setQuiz] = useState<Quiz | undefined>(undefined)
+    const [currentQuestion, setCurrentQuestion] = useState<Question | undefined>(undefined)
+    const [selectedAnswer, setSelectedAnswer] = useState<Answer | undefined>(undefined)
     const [score, setScore] = useState<number>(0)
 
-    async function loadQuiz(id: string): Promise<string | undefined> {
-        const response = await getQuizById(id)
-        setQuiz(response)
-        setCurrentQuestion(response?.questions[0] ?? null)
+    async function loadQuiz(pin: string): Promise<string | undefined> {
+        const response = await getQuizByPin(pin)
+        setQuiz(response.quiz)
+        setCurrentQuestion(response.quiz?.questions[0])
+        setSelectedAnswer(undefined)
+        setScore(0)
 
-        return response?._id
+        return response.quiz?.pin
     }
 
     function nextQuestion(): boolean {
         const length = quiz?.questions.length ?? 0
         const index = quiz?.questions.findIndex(q => q.id == currentQuestion?.id) ?? length
 
-        setSelectedAnswer(null)
+        setSelectedAnswer(undefined)
 
         if (index < length - 1) {
-            setCurrentQuestion(quiz?.questions[index + 1] ?? null)
+            setCurrentQuestion(quiz?.questions[index + 1])
             return true
         }
         
-        setCurrentQuestion(null)
+        setCurrentQuestion(undefined)
         return false
     } 
 

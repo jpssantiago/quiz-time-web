@@ -1,12 +1,16 @@
 import { Quiz } from "../models/quiz";
 import { api } from "./api-service"
 
-export async function getQuizById(id: string): Promise<Quiz | null> {
-    try {
-        const response = await api.get("quiz/" + id)
+interface GetQuizByPinResponse {
+    quiz?: Quiz
+}
 
-        return response.data as Quiz
+export async function getQuizByPin(pin: string): Promise<GetQuizByPinResponse> {
+    try {
+        const response = await api.get("quiz/" + pin)
+
+        return { quiz: response.data }
     } catch (err) {
-        return null
+        return {}
     }
 }

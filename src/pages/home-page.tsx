@@ -27,14 +27,14 @@ export function HomePage() {
         }
 
         setLoading(true)
-        const loadedId = await loadQuiz(pin) 
+        const loadedPin = await loadQuiz(pin) 
         setLoading(false)
 
-        if (!loadedId) {
+        if (!loadedPin) {
             return toast("The pin you entered is invalid.")
         }
 
-        navigate("/quiz/" + loadedId)
+        navigate("/quiz/" + loadedPin)
     }
 
     return (

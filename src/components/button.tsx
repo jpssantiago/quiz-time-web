@@ -2,16 +2,17 @@ interface Props {
     onClick?: () => void
     variant?: "contained" | "outlined"
 
+    height?: string
     children?: any
 }
 
-export function Button({ onClick, variant = "contained", children }: Props) {
+export function Button({ onClick, variant = "contained", height, children }: Props) {
     return (
         <button
             className={`
-                border
+                border-2
                 rounded-lg
-                h-16
+                ${height ?? "h-16"}
                 w-full
                 transition-all
                 ${variant == "contained" ? 
