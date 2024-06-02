@@ -32,9 +32,17 @@ export function QuizProvider({ children }: any) {
     const [selectedAnswer, setSelectedAnswer] = useState<Answer | undefined>(undefined)
     const [score, setScore] = useState<number>(0)
 
+    function shuffleAnswers(answers?: Answer[]) {
+        if (!answers) return
+        
+        answers.sort(() => Math.random() - 0.5)
+    }
+
     async function loadQuiz(pin: string): Promise<string | undefined> {
         const response = await getQuizByPin(pin)
+
         setQuiz(response.quiz)
+        shuffleAnswers(response.quiz?.questions[0].answers)
         setCurrentQuestion(response.quiz?.questions[0])
         setSelectedAnswer(undefined)
         setScore(0)
@@ -49,6 +57,7 @@ export function QuizProvider({ children }: any) {
         setSelectedAnswer(undefined)
 
         if (index < length - 1) {
+            shuffleAnswers(quiz?.questions[index + 1].answers)
             setCurrentQuestion(quiz?.questions[index + 1])
             return true
         }
@@ -66,6 +75,7 @@ export function QuizProvider({ children }: any) {
     }
 
     function restartQuiz() {
+        shuffleAnswers(quiz?.questions[0].answers)
         setCurrentQuestion(quiz?.questions[0])
         setSelectedAnswer(undefined)
         setScore(0)
