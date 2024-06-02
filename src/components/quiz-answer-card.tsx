@@ -49,13 +49,13 @@ export function QuizAnswerCard({ answer }: Props) {
             onClick={handleOnClick}
         >
             <div
-                className={`absolute rounded-full top-5 right-5 size-6 border-[3px] transition-all ${getIndicatorBackground()}`}
+                className={`absolute rounded-full top-5 right-5 size-6 border-[3px] transition-all ${getIndicatorBackground()} phone:top-[calc(50%-12px)]`}
             >
                 {currentQuestion && isThisAnswerCorrect && <Check size={18} className="text-caption" />}
                 {currentQuestion && isThisAnswerWrong && <X size={18} className="text-caption" />}
             </div>
 
-            <span className="text-base font-bold text-text">{answer.text}</span>
+            <span className="w-full text-base font-bold mx-14 text-text">{answer.text}</span>
         </div>
     )
 }

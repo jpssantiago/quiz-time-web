@@ -30,7 +30,7 @@ export function FinishedQuizContainer() {
         <div className="flex flex-col items-center justify-center gap-10 size-full">
             <span className="font-bold text-center text-9xl text-text phone:text-7xl">{percent.toFixed(0)}%</span>
             
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col items-center gap-3">
                 <span className="text-lg text-center text-text">{getMessage()}</span>
                 <div className="w-[350px]">
                     <Button onClick={() => navigate("/")}>Go back to home</Button>
