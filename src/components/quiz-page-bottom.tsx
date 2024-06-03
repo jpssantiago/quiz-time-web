@@ -1,25 +1,9 @@
-import { useState } from "react"
 import { ChevronRight } from "lucide-react"
-import { useNavigate } from "react-router-dom"
 
 import { useQuiz } from "../hooks/quiz-context"
-import { useCreator } from "../hooks/creator-context"
-import { EnterCreatorModeModal } from "./enter-creator-mode-modal"
 
-export function QuizPageBottom() {
-    const [show, setShow] = useState<boolean>(false)
-    
+export function QuizPageBottom() {   
     const { currentQuestion, quiz, selectedAnswer, nextQuestion } = useQuiz()
-    const { hasToken } = useCreator()
-    const navigate = useNavigate()
-
-    function handleClick() {
-        if (hasToken) {
-            return navigate(`/creator/${quiz?.pin}`)
-        }
-
-        setShow(true)
-    }
 
     const index = quiz?.questions.findIndex(q => q.id == currentQuestion?.id)
 
@@ -30,19 +14,6 @@ export function QuizPageBottom() {
                 <span className="text-[12px]">/ {quiz?.questions.length}</span>
             </div>
 
-            <span className="text-base text-center text-text phone:hidden">
-                Are you the creator of this quiz?
-                <span 
-                    className="transition-all cursor-pointer text-light-purple hover:text-dark-purple"
-                    onClick={handleClick}
-                > You can edit it</span>.
-            </span>
-
-            <span 
-                className="hidden text-sm text-center text-light-purple phone:flex"
-                onClick={handleClick}
-            >Edit this quiz.</span>
-
             <button 
                 className="flex items-center justify-center transition-all border rounded-full size-12 hover:bg-success/80 bg-success border-success disabled:bg-card disabled:border-stroke"
                 disabled={!selectedAnswer}
@@ -50,8 +21,6 @@ export function QuizPageBottom() {
             >
                 <ChevronRight size={24} className="text-caption" />
             </button>
-
-            <EnterCreatorModeModal show={show} onClose={() => setShow(false)} />
         </div>
     )
 }

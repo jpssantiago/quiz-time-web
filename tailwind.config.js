@@ -23,7 +23,7 @@ export default {
       },
       screens: {
         phone: { max: "700px" },
-        tablet: { min: "700px", max: "1024px" }
+        tablet: { min: "700px", max: "1100px" }
       }
     },
   },

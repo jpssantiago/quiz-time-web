@@ -7,7 +7,6 @@ import { PageContainer } from "../components/page-container"
 import { PageHeader } from "../components/page-header"
 import { Input } from "../components/input"
 import { Button } from "../components/button"
-import { Divider } from "../components/divider"
 import { useQuiz } from "../hooks/quiz-context"
 
 export function HomePage() {
@@ -44,8 +43,7 @@ export function HomePage() {
             <div className="size-full justify-center items-center flex flex-col gap-[60px]">
                 <span className="text-2xl font-bold text-center text-text">Test your knowledge and make history 🏆</span>
 
-                <div className="flex flex-col gap-5 phone:max-w-[400px] phone:w-full">
-                    <form className="w-[400px] flex flex-col gap-5 phone:w-full" onSubmit={handleOnSubmit}>
+                <form className="max-w-[400px] w-full flex flex-col gap-5" onSubmit={handleOnSubmit}>
                         <Input
                             placeholder="Enter the quiz pin"
                             value={pin}
@@ -54,16 +52,6 @@ export function HomePage() {
 
                         <Button variant="contained">{loading ? "Joining..." : "Join quiz"}</Button>
                     </form>
-
-                    <Divider showOrText={true} />
-
-                    <div className="w-[400px] phone:w-full">
-                        <Button
-                            onClick={() => navigate("/quiz")} 
-                            variant="outlined"
-                        >Create a new quiz</Button>
-                    </div>
-                </div>
             </div>
 
             <ToastContainer

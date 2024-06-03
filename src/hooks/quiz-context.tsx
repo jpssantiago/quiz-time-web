@@ -41,13 +41,13 @@ export function QuizProvider({ children }: any) {
     async function loadQuiz(pin: string): Promise<string | undefined> {
         const response = await getQuizByPin(pin)
 
-        setQuiz(response.quiz)
-        shuffleAnswers(response.quiz?.questions[0].answers)
-        setCurrentQuestion(response.quiz?.questions[0])
+        setQuiz(response)
+        shuffleAnswers(response?.questions[0].answers)
+        setCurrentQuestion(response?.questions[0])
         setSelectedAnswer(undefined)
         setScore(0)
 
-        return response.quiz?.pin
+        return response?.pin
     }
 
     function nextQuestion(): boolean {
