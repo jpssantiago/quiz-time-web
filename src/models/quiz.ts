@@ -1,7 +1,6 @@
 import { Question } from "./question"
 
 export interface Quiz {
-    _id: string
-    pin: string
+    id: string
     questions: Question[]
 }

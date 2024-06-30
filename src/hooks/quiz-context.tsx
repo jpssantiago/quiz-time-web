@@ -1,13 +1,14 @@
 import { createContext, useContext, useState } from "react"
 
 import { Quiz } from "../models/quiz"
-import { getQuizByPin } from "../services/quiz-service"
+import { GetQuizResponse } from "../responses/quiz-responses"
+import { getQuiz } from "../services/quiz-service"
 import { Question } from "../models/question"
 import { Answer } from "../models/answer"
 
 interface QuizContextType {
     quiz?: Quiz
-    loadQuiz: (pin: string) => Promise<string | undefined>
+    loadQuiz: () => Promise<GetQuizResponse>
 
     currentQuestion?: Question
     nextQuestion: () => boolean
@@ -34,20 +35,22 @@ export function QuizProvider({ children }: any) {
 
     function shuffleAnswers(answers?: Answer[]) {
         if (!answers) return
-        
+
         answers.sort(() => Math.random() - 0.5)
     }
 
-    async function loadQuiz(pin: string): Promise<string | undefined> {
-        const response = await getQuizByPin(pin)
+    async function loadQuiz(): Promise<GetQuizResponse> {
+        const response = await getQuiz()
 
-        setQuiz(response)
-        shuffleAnswers(response?.questions[0].answers)
-        setCurrentQuestion(response?.questions[0])
-        setSelectedAnswer(undefined)
-        setScore(0)
+        if (response.quiz) {
+            setQuiz(response.quiz)
+            shuffleAnswers(response.quiz.questions[0].answers)
+            setCurrentQuestion(response.quiz.questions[0])
+            setSelectedAnswer(undefined)
+            setScore(0)
+        }
 
-        return response?.pin
+        return response
     }
 
     function nextQuestion(): boolean {
@@ -61,10 +64,10 @@ export function QuizProvider({ children }: any) {
             setCurrentQuestion(quiz?.questions[index + 1])
             return true
         }
-        
+
         setCurrentQuestion(undefined)
         return false
-    } 
+    }
 
     function selectAnswer(answer: Answer) {
         setSelectedAnswer(answer)
@@ -80,7 +83,7 @@ export function QuizProvider({ children }: any) {
         setSelectedAnswer(undefined)
         setScore(0)
     }
-    
+
     return (
         <QuizContext.Provider value={{ quiz, loadQuiz, currentQuestion, nextQuestion, selectedAnswer, selectAnswer, score, restartQuiz }}>
             {children}

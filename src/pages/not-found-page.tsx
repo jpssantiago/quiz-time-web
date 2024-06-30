@@ -11,10 +11,10 @@ export function NotFoundPage() {
         <PageContainer>
             <PageHeader />
 
-            <div className="flex flex-col items-center justify-center gap-10 text-center size-full text-text">
+            <div className="flex flex-col justify-center items-center gap-10 text-center text-text size-full">
                 <span className="font-bold text-9xl phone:text-7xl">404</span>
                 
-                <div className="max-w-[400px] w-full gap-3 flex flex-col">
+                <div className="flex flex-col gap-3 w-full max-w-[400px]">
                     <span className="text-lg">Oooops, this page does not exist.</span>
                     <Button onClick={() => navigate("/")}>Go back to home</Button>
                 </div>

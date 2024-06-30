@@ -1,12 +1,16 @@
-import { Quiz } from "../models/quiz";
-import { api } from "./api-service"
+import { GetQuizResponse } from "../responses/quiz-responses"
 
-export async function getQuizByPin(pin: string): Promise<Quiz | undefined> {
+export async function getQuiz(): Promise<GetQuizResponse> {
     try {
-        const response = await api.get("quiz/" + pin)
+        const response = await fetch("https://bucket.joaosantiago.com.br/quiz-time.json")
+        const data = await response.json()
 
-        return response.data
+        if (data.quiz) {
+            return { quiz: data.quiz }
+        }
+
+        return { err: "no-quiz" }
     } catch (err) {
-        return undefined
+        return { err: "bucket-not-available" }
     }
 }

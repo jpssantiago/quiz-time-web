@@ -11,7 +11,7 @@ export function GlobalRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/quiz/:pin" element={<QuizPage />} />
+        <Route path="/play" element={<QuizPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

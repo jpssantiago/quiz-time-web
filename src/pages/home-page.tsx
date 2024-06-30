@@ -10,7 +10,7 @@ import { Button } from "../components/button"
 import { useQuiz } from "../hooks/quiz-context"
 
 export function HomePage() {
-    const [pin, setPin] = useState<string>("")
+    const [name, setName] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
     const navigate = useNavigate()
@@ -21,33 +21,29 @@ export function HomePage() {
 
         if (loading) return
 
-        if (pin.trim().length == 0) {
-            return toast("Enter a valid pin to continue.")
-        }
-
         setLoading(true)
-        const loadedPin = await loadQuiz(pin) 
+        const response = await loadQuiz() 
         setLoading(false)
 
-        if (!loadedPin) {
-            return toast("The pin you entered is invalid.")
+        if (response.err) {
+            return toast("There was an error while loading the quiz. Try again later.")
         }
 
-        navigate("/quiz/" + loadedPin)
+        navigate("/play")
     }
 
     return (
         <PageContainer>
             <PageHeader />
 
-            <div className="size-full justify-center items-center flex flex-col gap-[60px]">
-                <span className="text-2xl font-bold text-center text-text">Test your knowledge and make history 🏆</span>
+            <div className="flex flex-col justify-center items-center gap-[60px] size-full">
+                <span className="font-bold text-2xl text-center text-text">Test your knowledge and make history 🏆</span>
 
-                <form className="max-w-[400px] w-full flex flex-col gap-5" onSubmit={handleOnSubmit}>
+                <form className="flex flex-col gap-5 w-full max-w-[400px]" onSubmit={handleOnSubmit}>
                         <Input
-                            placeholder="Enter the quiz pin"
-                            value={pin}
-                            onChange={setPin}
+                            placeholder="Your name (optional 😁)"
+                            value={name}
+                            onChange={setName}
                         />
 
                         <Button variant="contained">{loading ? "Joining..." : "Join quiz"}</Button>

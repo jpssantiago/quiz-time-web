@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import { useQuiz } from "../hooks/quiz-context"
 import { PageContainer } from "../components/page-container"
@@ -13,19 +13,15 @@ import { FinishedQuizContainer } from "../components/finished-quiz-container"
 export function QuizPage() {
     const { quiz, loadQuiz, currentQuestion } = useQuiz()
     const navigate = useNavigate()
-    const { pin } = useParams()
 
     useEffect(() => {
-        async function tryToLoadQuiz() {
-            if (!pin) return navigate("/")
-
-            if (!quiz) {
-                const loaded = await loadQuiz(pin)
-                if (!loaded) return navigate("/")
-            }
+        if (!quiz) {
+            loadQuiz().then(response => {
+                if (response.err) {
+                    return navigate("/")
+                }
+            })
         }
-
-        tryToLoadQuiz()
     }, [])
 
     return (
